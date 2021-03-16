@@ -1,0 +1,11 @@
+body{
+    background-image: linear-gradient(to right,#b84ce0,#fc4ca0);
+}
+
+.card {
+    width: 40%;
+}
+
+strong{
+    color: red;
+}
