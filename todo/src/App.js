@@ -1,9 +1,11 @@
+import Home from "./frontend/components/Home.js";
+
 function App() {
-  return (
-    <div className="App">
-      <p className="text-center text-2xl my-16">This is the frontend part</p>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Home />
+        </div>
+    );
 }
 
 export default App;
