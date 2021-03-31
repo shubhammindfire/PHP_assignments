@@ -13,6 +13,7 @@
         "react-redux": "^7.2.3",
         "react-scripts": "4.0.3",
         "redux": "^4.0.5",
+        "redux-devtools-extension": "^2.13.9",
         "redux-logger": "^3.0.6",
         "web-vitals": "^1.1.1"
     },
@@ -43,6 +44,7 @@
     "devDependencies": {
         "@tailwindcss/postcss7-compat": "^2.0.4",
         "autoprefixer": "^9.8.6",
+        "eslint-plugin-react-hooks": "^4.2.0",
         "postcss": "^7.0.35",
         "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4"
     }

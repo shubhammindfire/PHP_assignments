@@ -11,8 +11,7 @@ function TodoList() {
         <div>
             {allTodoData
                 ? allTodoData.map((element) => {
-                      console.log(`element = ${JSON.stringify(element)}`);
-                      return <TodoListItem listItem={element} />;
+                      return <TodoListItem key={element.id} listItem={element} />;
                   })
                 : "null"}
         </div>

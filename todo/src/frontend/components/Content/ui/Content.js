@@ -4,7 +4,7 @@ import TodoList from "./TodoList.js";
 
 function Content() {
     return (
-        <div className="flex justify-center items-center">
+        <div className="flex flex-col justify-center items-center">
             <Card />
             <TodoList />
         </div>
