@@ -16,10 +16,14 @@ function TodoListItem(props) {
     const [changePriority, setChangePriority] = useState(
         props.listItem.priority
     );
+    const [changeIsCompleted, setChangeIsCompleted] = useState(
+        props.listItem.isCompleted === "1" ? true : false
+    );
     const dispatch = useDispatch();
     const listItem = props.listItem;
     console.log(`props = ${JSON.stringify(props.listItem)}`);
-    const url = `http://localhost/PHP_assignments/todo/src/backend/utils/updateTodo.php`;
+    const deleteUrl = `http://localhost/PHP_assignments/todo/src/backend/utils/deleteTodo.php`;
+    const updateUrl = `http://localhost/PHP_assignments/todo/src/backend/utils/updateTodo.php`;
 
     function handleChangePriority(e, priority) {
         e.preventDefault();
@@ -36,7 +40,7 @@ function TodoListItem(props) {
         setShowModal(false);
     }
     const useHandleDelete = () => {
-        useDeleteTodo(url, listItem.id);
+        useDeleteTodo(deleteUrl, listItem.id);
         dispatch(deleteTodo(listItem.id));
     };
 
@@ -49,11 +53,34 @@ function TodoListItem(props) {
         // dispatch(deleteTodo(listItem.id));
     };
 
+    function useHandleIsCompletedChange() {
+        setChangeIsCompleted(!changeIsCompleted);
+        useUpdateTodo(
+            updateUrl,
+            listItem.id,
+            "isCompleted",
+            changeIsCompleted === false ? 1 : 0
+        );
+
+        // used a little hack as I cannot dispatch in useAddTodo!!
+        // so I wait for the axios in useAddTodo to complete thus the wait for 0.5 sec
+        setTimeout(function () {
+            axios
+                .get(
+                    "http://localhost/PHP_assignments/todo/src/backend/utils/getAllTodo.php"
+                )
+                .then((response) => {
+                    dispatch(getAllTodo(response.data));
+                })
+                .catch((error) => console.error(`Error: ${error}`));
+        }, 500);
+    }
+
     function useHandleSubmitModal(e) {
         e.preventDefault();
 
-        useUpdateTodo(url, listItem.id, "title", changeTitle);
-        useUpdateTodo(url, listItem.id, "priority", changePriority);
+        useUpdateTodo(updateUrl, listItem.id, "title", changeTitle);
+        useUpdateTodo(updateUrl, listItem.id, "priority", changePriority);
 
         // used a little hack as I cannot dispatch in useAddTodo!!
         // so I wait for the axios in useAddTodo to complete thus the wait for 0.5 sec
@@ -77,11 +104,21 @@ function TodoListItem(props) {
                     ? "bg-yellow-50"
                     : listItem.priority === "MEDIUM"
                     ? "bg-yellow-200"
-                    : "bg-red-100"
+                    : "bg-red-300"
             }`}
         >
-            <input type="checkbox" />
-            <p className="flex-1 w-80 break-words px-2">{listItem.title}</p>
+            <input
+                type="checkbox"
+                checked={changeIsCompleted}
+                onChange={useHandleIsCompletedChange}
+            />
+            <p
+                className={`flex-1 w-80 break-words px-2 ${
+                    listItem.isCompleted === "1" ? "line-through" : ""
+                }`}
+            >
+                {listItem.title}
+            </p>
             <button
                 className="text-green-600"
                 title="Update"
@@ -98,7 +135,6 @@ function TodoListItem(props) {
             </button>
             {/* Modal */}
             {showModal ? (
-                // <div class="w-80 h-80 fixed pin z-50 overflow-auto bg-red flex">
                 <div className="w-96 h-40 fixed bg-white border border-black rounded-lg">
                     {/* dialog */}
                     <div className="relative p-8 w-full max-w-md m-auto flex-col flex">
