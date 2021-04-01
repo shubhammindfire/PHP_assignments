@@ -1,4 +1,4 @@
-import { GET_ALL_TODO, DELETE_TODO } from "./todoTypes.js";
+import { GET_ALL_TODO, DELETE_TODO, ADD_TODO } from "./todoTypes.js";
 
 const initialState = {
     allTodoData: [],
@@ -16,6 +16,11 @@ const todoReducer = (state = initialState, action) => {
                         (todo) => todo.id !== action.payload
                     ),
                 ],
+            };
+        case ADD_TODO:
+            return {
+                ...state,
+                allTodoData: [...state.allTodoData, action.payload],
             };
         default:
             return state;

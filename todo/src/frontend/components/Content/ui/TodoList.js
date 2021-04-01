@@ -9,11 +9,13 @@ function TodoList() {
 
     return (
         <div>
-            {allTodoData
-                ? allTodoData.map((element) => {
-                      return <TodoListItem key={element.id} listItem={element} />;
-                  })
-                : "null"}
+            {allTodoData.length !== 0 ? (
+                allTodoData.map((element) => {
+                    return <TodoListItem key={element.id} listItem={element} />;
+                })
+            ) : (
+                <p>No Todo Added</p>
+            )}
         </div>
     );
 }

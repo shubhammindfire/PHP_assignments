@@ -1,4 +1,4 @@
-import { GET_ALL_TODO, DELETE_TODO } from "./todoTypes.js";
+import { GET_ALL_TODO, DELETE_TODO, ADD_TODO } from "./todoTypes.js";
 
 export const getAllTodo = (allTodoData = []) => {
     return {
@@ -11,5 +11,12 @@ export const deleteTodo = (id) => {
     return {
         type: DELETE_TODO,
         payload: id,
+    };
+};
+
+export const addTodo = (newTodo = {}) => {
+    return {
+        type: ADD_TODO,
+        payload: newTodo,
     };
 };

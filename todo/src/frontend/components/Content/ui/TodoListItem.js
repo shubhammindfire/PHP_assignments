@@ -17,7 +17,7 @@ function TodoListItem(props) {
     };
 
     return (
-        <div className="flex p-2 m-2 bg-red-50">
+        <div className={`flex p-2 m-2 ${listItem.priority === "LOW"?"bg-yellow-50":(listItem.priority === "MEDIUM"?"bg-yellow-200":"bg-red-100")}`}>
             <input type="checkbox" />
             <p className="flex-1 w-80 break-words px-2">{listItem.title}</p>
             <button className="text-red-600" onClick={useHandleDelete}>
