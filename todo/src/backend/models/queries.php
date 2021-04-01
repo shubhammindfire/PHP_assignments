@@ -108,7 +108,7 @@ class Queries
     function updateTodo($id, $column, $newValue)
     {
         global $tablename;
-        $sql = "UPDATE $tablename SET $column=$newValue WHERE id=$id";
+        $sql = "UPDATE $tablename SET $column='$newValue' WHERE id=$id";
 
         if ($this->conn->query($sql) === true) {
             return [
