@@ -52,6 +52,7 @@ function Card() {
                     type="text"
                     placeholder="Enter todo"
                     size="25"
+                    maxLength="500"
                     value={todoText}
                     onChange={useOnHandleChange}
                     className="block m-auto px-2 border-gray-400 focus:border-black border-2 leading-10 rounded-md"
