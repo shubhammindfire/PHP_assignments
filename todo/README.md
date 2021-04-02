@@ -12,7 +12,7 @@ This is a Todo app built with these technologies:
     + MySQL 
       
 To test this software please ensure the following:
-+ Add an env.php file at src/backend/env.php
++ Add an env.php file at `src/backend/env.php`
 	This file should have a similar content
 	```
 	<?php
