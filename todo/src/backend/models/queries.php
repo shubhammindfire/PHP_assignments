@@ -32,7 +32,8 @@ class Queries
             title VARCHAR(500) NOT NULL,
             priority ENUM('LOW','MEDIUM','HIGH') DEFAULT 'LOW',
             isCompleted BOOLEAN DEFAULT FALSE,
-            add_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            add_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            FULLTEXT(title)
         )";
         if ($this->conn->query($sql) === false) {
             die("Error creating table $tablename: " . $this->conn->error);
@@ -75,6 +76,21 @@ class Queries
     {
         global $tablename;
         $sql = "SELECT id,title,priority,isCompleted,add_date FROM $tablename";
+
+        $data = $this->conn->query($sql);
+        $result = [];
+        foreach ($data as $key => $value) {
+            $result[$key] = $value;
+        }
+
+        return $result;
+    }
+
+    // Get all Todo by FULLTEXT filter from Database
+    function getFullTextTodo($searchText)
+    {
+        global $tablename;
+        $sql = "SELECT id,title,priority,isCompleted,add_date FROM $tablename WHERE MATCH(title) AGAINST('${searchText}' IN NATURAL LANGUAGE MODE)";
 
         $data = $this->conn->query($sql);
         $result = [];

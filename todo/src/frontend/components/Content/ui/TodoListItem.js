@@ -21,7 +21,6 @@ function TodoListItem(props) {
     );
     const dispatch = useDispatch();
     const listItem = props.listItem;
-    console.log(`props = ${JSON.stringify(props.listItem)}`);
     const deleteUrl = `http://localhost/PHP_assignments/todo/src/backend/utils/deleteTodo.php`;
     const updateUrl = `http://localhost/PHP_assignments/todo/src/backend/utils/updateTodo.php`;
 
@@ -48,9 +47,6 @@ function TodoListItem(props) {
         e.preventDefault();
         console.log("update");
         setShowModal(true);
-        // alert("Update Todo?");
-        // useUpdateTodo(url, listItem.id);
-        // dispatch(deleteTodo(listItem.id));
     };
 
     function useHandleIsCompletedChange() {

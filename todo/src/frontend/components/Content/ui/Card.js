@@ -20,9 +20,10 @@ function Card() {
     function useOnHandleChange(event) {
         setTodoText(event.target.value);
     }
+
     function useHandleClick(e) {
         e.preventDefault();
-        console.log("The link was clicked.");
+
         const isCompleted = 0;
         const newTodo = {
             title: todoText,
@@ -56,6 +57,7 @@ function Card() {
                     value={todoText}
                     onChange={useOnHandleChange}
                     className="block m-auto px-2 border-gray-400 focus:border-black border-2 leading-10 rounded-md"
+                    
                 />
                 <div>
                     <button

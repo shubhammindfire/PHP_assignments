@@ -1,13 +1,19 @@
-import { GET_ALL_TODO, DELETE_TODO, ADD_TODO } from "./todoTypes.js";
+import {
+    GET_ALL_TODO,
+    DELETE_TODO,
+    ADD_TODO,
+    GET_FULLTEXT_TODO,
+} from "./todoTypes.js";
 
 const initialState = {
     allTodoData: [],
+    fullTextTodoData: [],
 };
 
 const todoReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_ALL_TODO:
-            return { allTodoData: action.payload };
+            return { ...state, allTodoData: action.payload };
         case DELETE_TODO:
             return {
                 ...state,
@@ -22,6 +28,8 @@ const todoReducer = (state = initialState, action) => {
                 ...state,
                 allTodoData: [...state.allTodoData, action.payload],
             };
+        case GET_FULLTEXT_TODO:
+            return { ...state, fullTextTodoData: action.payload };
         default:
             return state;
     }

@@ -1,4 +1,9 @@
-import { GET_ALL_TODO, DELETE_TODO, ADD_TODO } from "./todoTypes.js";
+import {
+    GET_ALL_TODO,
+    DELETE_TODO,
+    ADD_TODO,
+    GET_FULLTEXT_TODO,
+} from "./todoTypes.js";
 
 export const getAllTodo = (allTodoData = []) => {
     return {
@@ -18,5 +23,12 @@ export const addTodo = (newTodo = {}) => {
     return {
         type: ADD_TODO,
         payload: newTodo,
+    };
+};
+
+export const getFullTextTodo = (fullTextTodoData = []) => {
+    return {
+        type: GET_FULLTEXT_TODO,
+        payload: fullTextTodoData,
     };
 };
