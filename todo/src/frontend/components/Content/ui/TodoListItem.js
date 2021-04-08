@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import useDeleteTodo from "./../utils/useDeleteTodo.js";
-import useUpdateTodo from "../utils/useUpdateTodo.js";
-import axios from "axios";
+import funcDeleteTodo from "../utils/funcDeleteTodo.js";
+import funcUpdateTodo from "../utils/funcUpdateTodo.js";
 import { useDispatch } from "react-redux";
-import { deleteTodo } from "../../../../redux/todo/todoActions.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
-import { getAllTodo } from "../../../../redux/todo/todoActions.js";
 
 function TodoListItem(props) {
     const [showModal, setShowModal] = useState(false);
@@ -21,8 +18,8 @@ function TodoListItem(props) {
     );
     const dispatch = useDispatch();
     const listItem = props.listItem;
-    const deleteUrl = `http://localhost/PHP_assignments/todo/src/backend/utils/deleteTodo.php`;
-    const updateUrl = `http://localhost/PHP_assignments/todo/src/backend/utils/updateTodo.php`;
+    const deleteUrl = `http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=DELETE_TODO`;
+    const updateUrl = `http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=UPDATE_TODO`;
 
     function handleChangePriority(e, priority) {
         e.preventDefault();
@@ -39,57 +36,37 @@ function TodoListItem(props) {
         setShowModal(false);
     }
     const useHandleDelete = () => {
-        useDeleteTodo(deleteUrl, listItem.id);
-        dispatch(deleteTodo(listItem.id));
+        funcDeleteTodo(deleteUrl, listItem.id, dispatch);
     };
 
     const useHandleUpdate = (e) => {
         e.preventDefault();
-        console.log("update");
         setShowModal(true);
     };
 
     function useHandleIsCompletedChange() {
         setChangeIsCompleted(!changeIsCompleted);
-        useUpdateTodo(
+        funcUpdateTodo(
             updateUrl,
             listItem.id,
             "isCompleted",
-            changeIsCompleted === false ? 1 : 0
+            changeIsCompleted === false ? 1 : 0,
+            dispatch
         );
-
-        // used a little hack as I cannot dispatch in useAddTodo!!
-        // so I wait for the axios in useAddTodo to complete thus the wait for 0.5 sec
-        setTimeout(function () {
-            axios
-                .get(
-                    "http://localhost/PHP_assignments/todo/src/backend/utils/getAllTodo.php"
-                )
-                .then((response) => {
-                    dispatch(getAllTodo(response.data));
-                })
-                .catch((error) => console.error(`Error: ${error}`));
-        }, 500);
     }
 
     function useHandleSubmitModal(e) {
         e.preventDefault();
 
-        useUpdateTodo(updateUrl, listItem.id, "title", changeTitle);
-        useUpdateTodo(updateUrl, listItem.id, "priority", changePriority);
+        funcUpdateTodo(updateUrl, listItem.id, "title", changeTitle, dispatch);
+        funcUpdateTodo(
+            updateUrl,
+            listItem.id,
+            "priority",
+            changePriority,
+            dispatch
+        );
 
-        // used a little hack as I cannot dispatch in useAddTodo!!
-        // so I wait for the axios in useAddTodo to complete thus the wait for 0.5 sec
-        setTimeout(function () {
-            axios
-                .get(
-                    "http://localhost/PHP_assignments/todo/src/backend/utils/getAllTodo.php"
-                )
-                .then((response) => {
-                    dispatch(getAllTodo(response.data));
-                })
-                .catch((error) => console.error(`Error: ${error}`));
-        }, 500);
         setShowModal(false);
     }
 

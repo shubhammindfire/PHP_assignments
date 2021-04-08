@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import useAddTodo from "./../utils/useAddTodo.js";
-import axios from "axios";
-import { getAllTodo } from "../../../../redux/todo/todoActions.js";
+import funcAddTodo from "../utils/funcAddTodo.js";
 
 function Card() {
     const [todoText, setTodoText] = useState("");
     const [priority, setPriority] = useState("LOW");
     const dispatch = useDispatch();
 
-    const url =
-        "http://localhost/PHP_assignments/todo/src/backend/utils/addTodo.php";
+    const addTodoUrl =
+        "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=ADD_TODO";
 
     function changePriority(e, priority) {
         e.preventDefault();
@@ -30,22 +28,11 @@ function Card() {
             isCompleted: isCompleted,
             priority: priority,
         };
-        useAddTodo(url, newTodo);
-        // used a little hack as I cannot dispatch in useAddTodo!!
-        // so I wait for the axios in useAddTodo to complete thus the wait for 0.5 sec
-        setTimeout(function () {
-            axios
-                .get(
-                    "http://localhost/PHP_assignments/todo/src/backend/utils/getAllTodo.php"
-                )
-                .then((response) => {
-                    dispatch(getAllTodo(response.data));
-                })
-                .catch((error) => console.error(`Error: ${error}`));
-        }, 500);
+        funcAddTodo(addTodoUrl, newTodo, dispatch);
 
         setTodoText("");
     }
+
     return (
         <div className="rounded w-80 m-4 bg-gray-50 shadow-lg p-6 align-middle">
             <form onSubmit={useHandleClick}>
@@ -57,11 +44,11 @@ function Card() {
                     value={todoText}
                     onChange={useOnHandleChange}
                     className="block m-auto px-2 border-gray-400 focus:border-black border-2 leading-10 rounded-md"
-                    
                 />
                 <div>
                     <button
                         type="button"
+                        // TODO add custom tailwind class named priorityBtn instead of repeating same styles for every button
                         className={`block float-left p-1 mt-5 text-sm bg-yellow-200 hover:bg-yellow-300 text-white rounded-md ${
                             priority === "LOW" ? "border-black border" : ""
                         }`}
@@ -71,6 +58,7 @@ function Card() {
                     </button>
                     <button
                         type="button"
+                        // TODO add custom tailwind class named priorityBtn instead of repeating same styles for every button
                         className={`block float-left p-1 mt-5 mx-1 text-sm bg-yellow-500 hover:bg-yellow-600 text-white rounded-md ${
                             priority === "MEDIUM" ? "border-black border" : ""
                         }`}
@@ -80,6 +68,7 @@ function Card() {
                     </button>
                     <button
                         type="button"
+                        // TODO add custom tailwind class named priorityBtn instead of repeating same styles for every button
                         className={`block float-left p-1 mt-5 ml-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded-md ${
                             priority === "HIGH" ? "border-black border" : ""
                         }`}

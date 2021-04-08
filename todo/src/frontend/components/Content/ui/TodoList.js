@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import TodoListItem from "./TodoListItem.js";
-import useGetAllTodo from "../utils/useGetAllTodo.js";
+import funcGetAllTodo from "../utils/funcGetAllTodo.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -12,10 +12,15 @@ function TodoList() {
     const [isCompletedFilter, changeIsCompletedFilter] = useState(false);
     const [searchText, changeSearchText] = useState("");
     const allTodoUrl =
-        "http://localhost/PHP_assignments/todo/src/backend/utils/getAllTodo.php";
+        "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=GET_ALL_TODO";
     const fullTextTodoUrl =
-        "http://localhost/PHP_assignments/todo/src/backend/utils/getFullTextTodo.php";
-    const { allTodoData } = useGetAllTodo(allTodoUrl);
+        "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=GET_FULLTEXT_TODO";
+    const { allTodoData } = funcGetAllTodo(
+        allTodoUrl,
+        dispatch,
+        useSelector,
+        useEffect
+    );
     const fullTextTodoData = Array.from(
         useSelector((state) => state.fullTextTodoData)
     );
@@ -45,7 +50,7 @@ function TodoList() {
                 searchText: e.target.value,
             })
             .then((response) => {
-                dispatch(getFullTextTodo(response.data));
+                dispatch(getFullTextTodo(response.data.payload));
             })
             .catch((error) => {
                 console.error(`Axios Error: ${error}`);
@@ -93,6 +98,7 @@ function TodoList() {
                     ) : null}
                 </div>
             ) : null}
+            {/* TODO FIX NEEDED : update, delete and isCompleted doesn't work well when fullText is applied */}
             {/* Check if only fullTextFilter is applied */}
             {!isCompletedFilter && searchText !== "" && searchText !== null ? (
                 <div id="fullTextFilter">
@@ -106,6 +112,7 @@ function TodoList() {
                     ) : null}
                 </div>
             ) : null}
+            {/* TODO FIX NEEDED : update, delete and isCompleted doesn't work well when fullText is applied */}
             {/* Check if both isCompletedFilter and fulltextFilter is applied */}
             {isCompletedFilter && searchText !== "" && searchText !== null ? (
                 <div id="bothFilter">
