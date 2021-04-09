@@ -22,4 +22,4 @@ To test this software please ensure the following:
 	$dbname = "todo";
 	$tablename = "todo";
 	```
-
++ Run this project with `npm run start`
