@@ -64,7 +64,10 @@ function TodoList() {
 
     return (
         <div>
-            <div id="filters">
+            <div
+                id="filters"
+                className="mx-9 my-2 md:m-2 sm:mx-9 sm:my-2 sm:p-2"
+            >
                 Filters
                 <FontAwesomeIcon
                     className="text-blue-600 mx-2"
@@ -83,7 +86,6 @@ function TodoList() {
                 <input
                     type="text"
                     placeholder="Search todo"
-                    size="25"
                     maxLength="500"
                     value={searchText}
                     onChange={useHandleSearchText}

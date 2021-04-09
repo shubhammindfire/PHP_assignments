@@ -36,15 +36,13 @@ function Card() {
     return (
         <div className="rounded w-80 m-4 bg-gray-50 shadow-lg p-6 align-middle">
             <form onSubmit={useHandleClick}>
-                {/* TODO manage it overflow in Chrome browser */}
                 <input
                     type="text"
                     placeholder="Enter todo"
-                    size="25"
                     maxLength="500"
                     value={todoText}
                     onChange={useOnHandleChange}
-                    className="block m-auto px-2 border-gray-400 focus:border-black border-2 leading-10 rounded-md"
+                    className="block m-auto w-full px-2 border-gray-400 focus:border-black border-2 leading-10 rounded-md"
                 />
                 <div>
                     <button
@@ -67,7 +65,7 @@ function Card() {
                     </button>
                     <button
                         type="button"
-                        className={`priorityBtn ml-1 bg-red-500 hover:bg-red-600 text-white rounded-md ${
+                        className={`priorityBtn bg-red-500 hover:bg-red-600 text-white rounded-md ${
                             priority === "HIGH" ? "border-black border" : ""
                         }`}
                         onClick={(e) => changePriority(e, "HIGH")}

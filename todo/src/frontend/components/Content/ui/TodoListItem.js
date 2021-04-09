@@ -79,7 +79,7 @@ function TodoListItem(props) {
 
     return (
         <div
-            className={`flex p-2 m-2 ${
+            className={`flex p-2 mx-9 my-2 md:m-2 sm:mx-9 sm:my-2 sm:p-2 ${
                 listItem.priority === "LOW"
                     ? "bg-yellow-50"
                     : listItem.priority === "MEDIUM"
