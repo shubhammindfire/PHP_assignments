@@ -5,12 +5,16 @@ import funcGetAllTodo from "../utils/funcGetAllTodo.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { getFullTextTodo } from "../../../../redux/todo/todoActions.js";
+import {
+    getFullTextTodo,
+    changeSearchText,
+} from "../../../../redux/todo/todoActions.js";
 
 function TodoList() {
     const dispatch = useDispatch();
     const [isCompletedFilter, changeIsCompletedFilter] = useState(false);
-    const [searchText, changeSearchText] = useState("");
+    // const [searchText, changeSearchText] = useState("");
+    const searchText = useSelector((state) => state.searchText);
     const allTodoUrl =
         "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=GET_ALL_TODO";
     const fullTextTodoUrl =
@@ -43,7 +47,8 @@ function TodoList() {
     }
 
     function useHandleSearchText(e) {
-        changeSearchText(e.target.value);
+        // changeSearchText(e.target.value);
+        dispatch(changeSearchText(e.target.value));
 
         axios
             .post(fullTextTodoUrl, {
@@ -98,7 +103,6 @@ function TodoList() {
                     ) : null}
                 </div>
             ) : null}
-            {/* TODO FIX NEEDED : update, delete and isCompleted doesn't work well when fullText is applied */}
             {/* Check if only fullTextFilter is applied */}
             {!isCompletedFilter && searchText !== "" && searchText !== null ? (
                 <div id="fullTextFilter">
@@ -112,7 +116,6 @@ function TodoList() {
                     ) : null}
                 </div>
             ) : null}
-            {/* TODO FIX NEEDED : update, delete and isCompleted doesn't work well when fullText is applied */}
             {/* Check if both isCompletedFilter and fulltextFilter is applied */}
             {isCompletedFilter && searchText !== "" && searchText !== null ? (
                 <div id="bothFilter">

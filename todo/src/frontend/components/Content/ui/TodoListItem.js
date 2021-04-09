@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import funcDeleteTodo from "../utils/funcDeleteTodo.js";
 import funcUpdateTodo from "../utils/funcUpdateTodo.js";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
+import funcGetFullTextTodo from "../utils/funcGetFullTextTodo.js";
 
 function TodoListItem(props) {
     const [showModal, setShowModal] = useState(false);
@@ -16,10 +17,13 @@ function TodoListItem(props) {
     const [changeIsCompleted, setChangeIsCompleted] = useState(
         props.listItem.isCompleted === "1" ? true : false
     );
+    const searchText = useSelector((state) => state.searchText);
     const dispatch = useDispatch();
     const listItem = props.listItem;
     const deleteUrl = `http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=DELETE_TODO`;
     const updateUrl = `http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=UPDATE_TODO`;
+    const fullTextTodoUrl =
+        "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=GET_FULLTEXT_TODO";
 
     function handleChangePriority(e, priority) {
         e.preventDefault();
@@ -37,6 +41,7 @@ function TodoListItem(props) {
     }
     const useHandleDelete = () => {
         funcDeleteTodo(deleteUrl, listItem.id, dispatch);
+        funcGetFullTextTodo(fullTextTodoUrl,searchText, dispatch, useSelector, useEffect);
     };
 
     const useHandleUpdate = (e) => {
@@ -53,6 +58,7 @@ function TodoListItem(props) {
             changeIsCompleted === false ? 1 : 0,
             dispatch
         );
+        funcGetFullTextTodo(fullTextTodoUrl,searchText, dispatch, useSelector, useEffect);
     }
 
     function useHandleSubmitModal(e) {
@@ -66,6 +72,7 @@ function TodoListItem(props) {
             changePriority,
             dispatch
         );
+        funcGetFullTextTodo(fullTextTodoUrl,searchText, dispatch, useSelector, useEffect);
 
         setShowModal(false);
     }
@@ -106,6 +113,7 @@ function TodoListItem(props) {
             >
                 <FontAwesomeIcon icon={faTrashAlt} />
             </button>
+            {/* TODO try to move to the middle because currently modal for bottom-most todo is difficult to click on buttons!! */}
             {/* Modal */}
             {showModal ? (
                 <div className="w-96 h-40 fixed bg-white border border-black rounded-lg">

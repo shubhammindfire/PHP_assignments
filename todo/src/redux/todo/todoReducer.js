@@ -3,11 +3,13 @@ import {
     DELETE_TODO,
     ADD_TODO,
     GET_FULLTEXT_TODO,
+    CHANGE_SEARCH_TEXT,
 } from "./todoTypes.js";
 
 const initialState = {
     allTodoData: [],
     fullTextTodoData: [],
+    searchText: "",
 };
 
 const todoReducer = (state = initialState, action) => {
@@ -30,6 +32,8 @@ const todoReducer = (state = initialState, action) => {
             };
         case GET_FULLTEXT_TODO:
             return { ...state, fullTextTodoData: action.payload };
+        case CHANGE_SEARCH_TEXT:
+            return { ...state, searchText: action.payload };
         default:
             return state;
     }
