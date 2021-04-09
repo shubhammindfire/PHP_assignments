@@ -2,7 +2,7 @@ import axios from "axios";
 import { getFullTextTodo } from "../../../../redux/todo/todoActions.js";
 
 // function to load all FullText todo data
-function funcGetFullTextTodo(url, searchText, dispatch, selector, effect) {
+function funcGetFullTextTodo(url, searchText, dispatch) {
     axios
         .post(url, {
             searchText: searchText,

@@ -7,6 +7,7 @@ import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
 import funcGetFullTextTodo from "../utils/funcGetFullTextTodo.js";
+import { drag } from './../utils/dragNdrop.js';
 
 function TodoListItem(props) {
     const [showModal, setShowModal] = useState(false);
@@ -86,6 +87,8 @@ function TodoListItem(props) {
                     ? "bg-yellow-200"
                     : "bg-red-300"
             }`}
+            draggable="true"
+            onDragStart={(event) => drag(event,listItem.id)}
         >
             <input
                 type="checkbox"

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import TodoListItem from "./TodoListItem.js";
 import funcGetAllTodo from "../utils/funcGetAllTodo.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
@@ -9,11 +8,11 @@ import {
     getFullTextTodo,
     changeSearchText,
 } from "../../../../redux/todo/todoActions.js";
+import DisplayTodoGroup from "./DisplayTodoGroup.js";
 
 function TodoList() {
     const dispatch = useDispatch();
     const [isCompletedFilter, changeIsCompletedFilter] = useState(false);
-    // const [searchText, changeSearchText] = useState("");
     const searchText = useSelector((state) => state.searchText);
     const allTodoUrl =
         "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=GET_ALL_TODO";
@@ -29,16 +28,60 @@ function TodoList() {
         useSelector((state) => state.fullTextTodoData)
     );
 
-    let notCompletedTodo, completedTodo, fullTextCompleted;
+    let notCompletedLowTodo,
+        completedLowTodo,
+        fullTextLowCompleted,
+        fullTextLowNotCompleted;
+    let notCompletedMediumTodo,
+        completedMediumTodo,
+        fullTextMediumCompleted,
+        fullTextMediumNotCompleted;
+    let notCompletedHighTodo,
+        completedHighTodo,
+        fullTextHighCompleted,
+        fullTextHighNotCompleted;
 
-    completedTodo = allTodoData.filter(
-        (element) => element.isCompleted === "1"
+    completedLowTodo = allTodoData.filter(
+        (element) => element.priority === "LOW" && element.isCompleted === "1"
     );
-    notCompletedTodo = allTodoData.filter(
-        (element) => element.isCompleted === "0"
+    notCompletedLowTodo = allTodoData.filter(
+        (element) => element.priority === "LOW" && element.isCompleted === "0"
     );
-    fullTextCompleted = fullTextTodoData.filter(
-        (element) => element.isCompleted === "1"
+    fullTextLowCompleted = fullTextTodoData.filter(
+        (element) => element.priority === "LOW" && element.isCompleted === "1"
+    );
+    fullTextLowNotCompleted = fullTextTodoData.filter(
+        (element) => element.priority === "LOW" && element.isCompleted === "0"
+    );
+
+    completedMediumTodo = allTodoData.filter(
+        (element) =>
+            element.priority === "MEDIUM" && element.isCompleted === "1"
+    );
+    notCompletedMediumTodo = allTodoData.filter(
+        (element) =>
+            element.priority === "MEDIUM" && element.isCompleted === "0"
+    );
+    fullTextMediumCompleted = fullTextTodoData.filter(
+        (element) =>
+            element.priority === "MEDIUM" && element.isCompleted === "1"
+    );
+    fullTextMediumNotCompleted = fullTextTodoData.filter(
+        (element) =>
+            element.priority === "MEDIUM" && element.isCompleted === "0"
+    );
+
+    completedHighTodo = allTodoData.filter(
+        (element) => element.priority === "HIGH" && element.isCompleted === "1"
+    );
+    notCompletedHighTodo = allTodoData.filter(
+        (element) => element.priority === "HIGH" && element.isCompleted === "0"
+    );
+    fullTextHighCompleted = fullTextTodoData.filter(
+        (element) => element.priority === "HIGH" && element.isCompleted === "1"
+    );
+    fullTextHighNotCompleted = fullTextTodoData.filter(
+        (element) => element.priority === "HIGH" && element.isCompleted === "0"
     );
 
     function handleCompletedFilter(e) {
@@ -47,7 +90,6 @@ function TodoList() {
     }
 
     function useHandleSearchText(e) {
-        // changeSearchText(e.target.value);
         dispatch(changeSearchText(e.target.value));
 
         axios
@@ -63,11 +105,8 @@ function TodoList() {
     }
 
     return (
-        <div>
-            <div
-                id="filters"
-                className="mx-9 my-2 md:m-2 sm:mx-9 sm:my-2 sm:p-2"
-            >
+        <div className="flex flex-col">
+            <div id="filters" className="m-auto p-2">
                 Filters
                 <FontAwesomeIcon
                     className="text-blue-600 mx-2"
@@ -95,60 +134,112 @@ function TodoList() {
             {/* Check if only isCompletedFilter is applied */}
             {isCompletedFilter && (searchText === "" || searchText === null) ? (
                 <div id="isCompletedFilter">
-                    {completedTodo.map((element) => {
-                        return (
-                            <TodoListItem key={element.id} listItem={element} />
-                        );
-                    })}
-                    {completedTodo.length === 0 ? (
-                        <p>No Todo Completed</p>
-                    ) : null}
+                    <div id="todoTable" className="flex">
+                        <DisplayTodoGroup
+                            id="lowTodo"
+                            notCompletedTodo={null}
+                            completedTodo={completedLowTodo}
+                            priority="LOW"
+                            dispatch={dispatch}
+                        />
+                        <DisplayTodoGroup
+                            id="mediumTodo"
+                            notCompletedTodo={null}
+                            completedTodo={completedMediumTodo}
+                            priority="MEDIUM"
+                            dispatch={dispatch}
+                        />
+                        <DisplayTodoGroup
+                            id="highTodo"
+                            notCompletedTodo={null}
+                            completedTodo={completedHighTodo}
+                            priority="HIGH"
+                            dispatch={dispatch}
+                        />
+                    </div>
                 </div>
             ) : null}
             {/* Check if only fullTextFilter is applied */}
             {!isCompletedFilter && searchText !== "" && searchText !== null ? (
                 <div id="fullTextFilter">
-                    {fullTextTodoData.map((element) => {
-                        return (
-                            <TodoListItem key={element.id} listItem={element} />
-                        );
-                    })}
-                    {fullTextTodoData.length === 0 ? (
-                        <p>No Todo for '{searchText}'</p>
-                    ) : null}
+                    <div id="todoTable" className="flex">
+                        <DisplayTodoGroup
+                            id="lowTodo"
+                            notCompletedTodo={fullTextLowNotCompleted}
+                            completedTodo={fullTextLowCompleted}
+                            priority="LOW"
+                            dispatch={dispatch}
+                        />
+                        <DisplayTodoGroup
+                            id="mediumTodo"
+                            notCompletedTodo={fullTextMediumNotCompleted}
+                            completedTodo={fullTextMediumCompleted}
+                            priority="MEDIUM"
+                            dispatch={dispatch}
+                        />
+                        <DisplayTodoGroup
+                            id="highTodo"
+                            notCompletedTodo={fullTextHighNotCompleted}
+                            completedTodo={fullTextHighCompleted}
+                            priority="HIGH"
+                            dispatch={dispatch}
+                        />
+                    </div>
                 </div>
             ) : null}
             {/* Check if both isCompletedFilter and fulltextFilter is applied */}
             {isCompletedFilter && searchText !== "" && searchText !== null ? (
                 <div id="bothFilter">
-                    {fullTextCompleted.map((element) => {
-                        return (
-                            <TodoListItem key={element.id} listItem={element} />
-                        );
-                    })}
-                    {fullTextCompleted.length === 0 ? (
-                        <p>No Todo Completed</p>
-                    ) : null}
+                    <div id="todoTable" className="flex">
+                        <DisplayTodoGroup
+                            id="lowTodo"
+                            notCompletedTodo={null}
+                            completedTodo={fullTextLowCompleted}
+                            priority="LOW"
+                            dispatch={dispatch}
+                        />
+                        <DisplayTodoGroup
+                            id="mediumTodo"
+                            notCompletedTodo={null}
+                            completedTodo={fullTextMediumCompleted}
+                            priority="MEDIUM"
+                            dispatch={dispatch}
+                        />
+                        <DisplayTodoGroup
+                            id="highTodo"
+                            notCompletedTodo={null}
+                            completedTodo={fullTextHighCompleted}
+                            priority="HIGH"
+                            dispatch={dispatch}
+                        />
+                    </div>
                 </div>
             ) : null}
             {/* Show this only if no filters are applied */}
             {!isCompletedFilter &&
             (searchText === "" || searchText === null) ? (
-                <div id="allTodo">
-                    {notCompletedTodo.map((element) => {
-                        return (
-                            <TodoListItem key={element.id} listItem={element} />
-                        );
-                    })}
-                    {completedTodo.map((element) => {
-                        return (
-                            <TodoListItem key={element.id} listItem={element} />
-                        );
-                    })}
-                    {completedTodo.length === 0 &&
-                    notCompletedTodo.length === 0 ? (
-                        <p>No Todo Added</p>
-                    ) : null}
+                <div id="todoTable" className="flex">
+                    <DisplayTodoGroup
+                        id="lowTodo"
+                        notCompletedTodo={notCompletedLowTodo}
+                        completedTodo={completedLowTodo}
+                        priority="LOW"
+                        dispatch={dispatch}
+                    />
+                    <DisplayTodoGroup
+                        id="mediumTodo"
+                        notCompletedTodo={notCompletedMediumTodo}
+                        completedTodo={completedMediumTodo}
+                        priority="MEDIUM"
+                        dispatch={dispatch}
+                    />
+                    <DisplayTodoGroup
+                        id="highTodo"
+                        notCompletedTodo={notCompletedHighTodo}
+                        completedTodo={completedHighTodo}
+                        priority="HIGH"
+                        dispatch={dispatch}
+                    />
                 </div>
             ) : null}
         </div>

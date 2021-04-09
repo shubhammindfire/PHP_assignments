@@ -1,11 +1,15 @@
 import axios from "axios";
-import { addTodo, getAllTodo } from "../../../../redux/todo/todoActions.js";
+import {
+    addTodo,
+    getAllTodo,
+} from "../../../../redux/todo/todoActions.js";
+import funcGetFullTextTodo from "./funcGetFullTextTodo.js";
 
 // function to add a todo
-function funcAddTodo(url, newTodo, dispatch) {
+function funcAddTodo(allTodoUrl, searchText, newTodo, dispatch) {
     // AJAX call to post new todo data to server
     axios
-        .post(url, {
+        .post(allTodoUrl, {
             title: newTodo.title,
             isCompleted: newTodo.isCompleted,
             priority: newTodo.priority,
@@ -41,6 +45,12 @@ function funcAddTodo(url, newTodo, dispatch) {
                     }
                 })
                 .catch((error) => console.error(`Error: ${error}`));
+        })
+        // after the new todo is added to store get fullText todo to refresh UI
+        .then(() => {
+            const fullTextUrl =
+                "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=GET_FULLTEXT_TODO";
+            funcGetFullTextTodo(fullTextUrl, searchText, dispatch);
         });
 }
 export default funcAddTodo;

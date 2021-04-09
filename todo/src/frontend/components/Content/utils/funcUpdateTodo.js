@@ -3,6 +3,7 @@ import { getAllTodo } from "../../../../redux/todo/todoActions.js";
 
 // function to update a todo
 function funcUpdateTodo(url, id, column, newValue, dispatch) {
+    console.log(`id=${id}, column=${column}, newValue=${newValue}`);
     axios
         .post(url, {
             id: id,

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import funcAddTodo from "../utils/funcAddTodo.js";
 
 function Card() {
     const [todoText, setTodoText] = useState("");
     const [priority, setPriority] = useState("LOW");
+    const searchText = useSelector(state => state.searchText);
     const dispatch = useDispatch();
 
     const addTodoUrl =
@@ -28,7 +29,7 @@ function Card() {
             isCompleted: isCompleted,
             priority: priority,
         };
-        funcAddTodo(addTodoUrl, newTodo, dispatch);
+        funcAddTodo(addTodoUrl, searchText, newTodo, dispatch);
 
         setTodoText("");
     }
