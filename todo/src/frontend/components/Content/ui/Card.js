@@ -36,6 +36,7 @@ function Card() {
     return (
         <div className="rounded w-80 m-4 bg-gray-50 shadow-lg p-6 align-middle">
             <form onSubmit={useHandleClick}>
+                {/* TODO manage it overflow in Chrome browser */}
                 <input
                     type="text"
                     placeholder="Enter todo"
@@ -48,8 +49,7 @@ function Card() {
                 <div>
                     <button
                         type="button"
-                        // TODO add custom tailwind class named priorityBtn instead of repeating same styles for every button
-                        className={`block float-left p-1 mt-5 text-sm bg-yellow-200 hover:bg-yellow-300 text-white rounded-md ${
+                        className={`priorityBtn bg-yellow-200 hover:bg-yellow-300 text-white rounded-md ${
                             priority === "LOW" ? "border-black border" : ""
                         }`}
                         onClick={(e) => changePriority(e, "LOW")}
@@ -58,8 +58,7 @@ function Card() {
                     </button>
                     <button
                         type="button"
-                        // TODO add custom tailwind class named priorityBtn instead of repeating same styles for every button
-                        className={`block float-left p-1 mt-5 mx-1 text-sm bg-yellow-500 hover:bg-yellow-600 text-white rounded-md ${
+                        className={`priorityBtn mx-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md ${
                             priority === "MEDIUM" ? "border-black border" : ""
                         }`}
                         onClick={(e) => changePriority(e, "MEDIUM")}
@@ -68,8 +67,7 @@ function Card() {
                     </button>
                     <button
                         type="button"
-                        // TODO add custom tailwind class named priorityBtn instead of repeating same styles for every button
-                        className={`block float-left p-1 mt-5 ml-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded-md ${
+                        className={`priorityBtn ml-1 bg-red-500 hover:bg-red-600 text-white rounded-md ${
                             priority === "HIGH" ? "border-black border" : ""
                         }`}
                         onClick={(e) => changePriority(e, "HIGH")}

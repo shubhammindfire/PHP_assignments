@@ -82,7 +82,7 @@ function TodoList() {
                 </button>
                 <input
                     type="text"
-                    placeholder="Enter todo"
+                    placeholder="Search todo"
                     size="25"
                     maxLength="500"
                     value={searchText}
