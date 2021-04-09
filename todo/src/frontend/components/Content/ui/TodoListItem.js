@@ -113,10 +113,9 @@ function TodoListItem(props) {
             >
                 <FontAwesomeIcon icon={faTrashAlt} />
             </button>
-            {/* TODO try to move to the middle because currently modal for bottom-most todo is difficult to click on buttons!! */}
             {/* Modal */}
             {showModal ? (
-                <div className="w-96 h-40 fixed bg-white border border-black rounded-lg">
+                <div className="w-96 h-40 fixed top-1/2 bg-white border border-black rounded-lg">
                     {/* dialog */}
                     <div className="relative p-8 w-full max-w-md m-auto flex-col flex">
                         <button
