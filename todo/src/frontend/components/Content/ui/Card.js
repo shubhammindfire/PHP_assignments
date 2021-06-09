@@ -9,7 +9,7 @@ function Card() {
     const dispatch = useDispatch();
 
     const addTodoUrl =
-        "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=ADD_TODO";
+        "http://13.233.99.122/src/backend/utils/todo.php?action=ADD_TODO";
 
     function changePriority(e, priority) {
         e.preventDefault();

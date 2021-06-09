@@ -15,9 +15,9 @@ function TodoList() {
     const [isCompletedFilter, changeIsCompletedFilter] = useState(false);
     const searchText = useSelector((state) => state.searchText);
     const allTodoUrl =
-        "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=GET_ALL_TODO";
+        "http://13.233.99.122/src/backend/utils/todo.php?action=GET_ALL_TODO";
     const fullTextTodoUrl =
-        "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=GET_FULLTEXT_TODO";
+        "http://13.233.99.122/src/backend/utils/todo.php?action=GET_FULLTEXT_TODO";
     const { allTodoData } = funcGetAllTodo(
         allTodoUrl,
         dispatch,

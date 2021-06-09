@@ -31,7 +31,7 @@ function funcAddTodo(allTodoUrl, searchText, newTodo, dispatch) {
         .then(() => {
             axios
                 .get(
-                    "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=GET_ALL_TODO"
+                    "http://13.233.99.122/src/backend/utils/todo.php?action=GET_ALL_TODO"
                 )
                 .then((response) => {
                     // disptach all todo to store
@@ -49,7 +49,7 @@ function funcAddTodo(allTodoUrl, searchText, newTodo, dispatch) {
         // after the new todo is added to store get fullText todo to refresh UI
         .then(() => {
             const fullTextUrl =
-                "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=GET_FULLTEXT_TODO";
+                "http://13.233.99.122/src/backend/utils/todo.php?action=GET_FULLTEXT_TODO";
             funcGetFullTextTodo(fullTextUrl, searchText, dispatch);
         });
 }

@@ -25,7 +25,7 @@ function funcUpdateTodo(url, id, column, newValue, dispatch) {
         .then(() => {
             axios
                 .get(
-                    "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=GET_ALL_TODO"
+                    "http://13.233.99.122/src/backend/utils/todo.php?action=GET_ALL_TODO"
                 )
                 .then((response) => {
                     // disptach all todo to store

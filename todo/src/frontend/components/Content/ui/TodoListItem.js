@@ -21,10 +21,10 @@ function TodoListItem(props) {
     const searchText = useSelector((state) => state.searchText);
     const dispatch = useDispatch();
     const listItem = props.listItem;
-    const deleteUrl = `http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=DELETE_TODO`;
-    const updateUrl = `http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=UPDATE_TODO`;
+    const deleteUrl = `http://13.233.99.122/src/backend/utils/todo.php?action=DELETE_TODO`;
+    const updateUrl = `http://13.233.99.122/src/backend/utils/todo.php?action=UPDATE_TODO`;
     const fullTextTodoUrl =
-        "http://localhost/PHP_assignments/todo/src/backend/utils/todo.php?action=GET_FULLTEXT_TODO";
+        "http://13.233.99.122/src/backend/utils/todo.php?action=GET_FULLTEXT_TODO";
 
     function handleChangePriority(e, priority) {
         e.preventDefault();
