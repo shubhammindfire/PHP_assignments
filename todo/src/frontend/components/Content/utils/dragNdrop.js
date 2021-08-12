@@ -1,5 +1,6 @@
 import funcUpdateTodo from "./funcUpdateTodo.js";
 import funcGetFullTextTodo from "./funcGetFullTextTodo.js";
+import { SERVER_URL } from "./../../../../constants.js";
 
 let itemId = "",
     finalPriority = "";
@@ -16,16 +17,11 @@ export function drop(event, priority, searchText, dispatch) {
     event.preventDefault();
 
     finalPriority = priority;
-    const updateUrl = `http://13.233.99.122/todo/src/backend/utils/todo.php?action=UPDATE_TODO`;
+    const updateUrl = `${SERVER_URL}?action=UPDATE_TODO`;
 
     funcUpdateTodo(updateUrl, itemId, "priority", finalPriority, dispatch);
 
-    const fullTextTodoUrl =
-        "http://13.233.99.122/todo/src/backend/utils/todo.php?action=GET_FULLTEXT_TODO";
+    const fullTextTodoUrl = `${SERVER_URL}?action=GET_FULLTEXT_TODO`;
 
-    funcGetFullTextTodo(
-        fullTextTodoUrl,
-        searchText,
-        dispatch,
-    );
+    funcGetFullTextTodo(fullTextTodoUrl, searchText, dispatch);
 }

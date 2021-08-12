@@ -8,6 +8,7 @@ import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
 import funcGetFullTextTodo from "../utils/funcGetFullTextTodo.js";
 import { drag } from './../utils/dragNdrop.js';
+import { SERVER_URL } from './../../../../constants.js';
 
 function TodoListItem(props) {
     const [showModal, setShowModal] = useState(false);
@@ -21,10 +22,10 @@ function TodoListItem(props) {
     const searchText = useSelector((state) => state.searchText);
     const dispatch = useDispatch();
     const listItem = props.listItem;
-    const deleteUrl = `http://13.233.99.122/todo/src/backend/utils/todo.php?action=DELETE_TODO`;
-    const updateUrl = `http://13.233.99.122/todo/src/backend/utils/todo.php?action=UPDATE_TODO`;
+    const deleteUrl = `${SERVER_URL}?action=DELETE_TODO`;
+    const updateUrl = `${SERVER_URL}?action=UPDATE_TODO`;
     const fullTextTodoUrl =
-        "http://13.233.99.122/todo/src/backend/utils/todo.php?action=GET_FULLTEXT_TODO";
+        `${SERVER_URL}?action=GET_FULLTEXT_TODO`;
 
     function handleChangePriority(e, priority) {
         e.preventDefault();

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import funcAddTodo from "../utils/funcAddTodo.js";
+import { SERVER_URL } from "./../../../../constants.js";
 
 function Card() {
     const [todoText, setTodoText] = useState("");
     const [priority, setPriority] = useState("LOW");
-    const searchText = useSelector(state => state.searchText);
+    const searchText = useSelector((state) => state.searchText);
     const dispatch = useDispatch();
 
-    const addTodoUrl =
-        "http://13.233.99.122/todo/src/backend/utils/todo.php?action=ADD_TODO";
+    const addTodoUrl = `${SERVER_URL}?action=ADD_TODO`;
 
     function changePriority(e, priority) {
         e.preventDefault();

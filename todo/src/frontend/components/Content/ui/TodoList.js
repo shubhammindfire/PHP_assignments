@@ -9,15 +9,16 @@ import {
     changeSearchText,
 } from "../../../../redux/todo/todoActions.js";
 import DisplayTodoGroup from "./DisplayTodoGroup.js";
+import { SERVER_URL } from './../../../../constants.js';
 
 function TodoList() {
     const dispatch = useDispatch();
     const [isCompletedFilter, changeIsCompletedFilter] = useState(false);
     const searchText = useSelector((state) => state.searchText);
     const allTodoUrl =
-        "http://13.233.99.122/todo/src/backend/utils/todo.php?action=GET_ALL_TODO";
+        `${SERVER_URL}?action=GET_ALL_TODO`;
     const fullTextTodoUrl =
-        "http://13.233.99.122/todo/src/backend/utils/todo.php?action=GET_FULLTEXT_TODO";
+        `${SERVER_URL}?action=GET_FULLTEXT_TODO`;
     const { allTodoData } = funcGetAllTodo(
         allTodoUrl,
         dispatch,

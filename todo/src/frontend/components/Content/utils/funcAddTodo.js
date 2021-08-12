@@ -1,9 +1,7 @@
 import axios from "axios";
-import {
-    addTodo,
-    getAllTodo,
-} from "../../../../redux/todo/todoActions.js";
+import { addTodo, getAllTodo } from "../../../../redux/todo/todoActions.js";
 import funcGetFullTextTodo from "./funcGetFullTextTodo.js";
+import { SERVER_URL } from "./../../../../constants.js";
 
 // function to add a todo
 function funcAddTodo(allTodoUrl, searchText, newTodo, dispatch) {
@@ -30,9 +28,7 @@ function funcAddTodo(allTodoUrl, searchText, newTodo, dispatch) {
         // after the new todo is added to store get all todo to refresh UI
         .then(() => {
             axios
-                .get(
-                    "http://13.233.99.122/todo/src/backend/utils/todo.php?action=GET_ALL_TODO"
-                )
+                .get(`${SERVER_URL}?action=GET_ALL_TODO`)
                 .then((response) => {
                     // disptach all todo to store
                     // this refreshes the UI
@@ -48,8 +44,7 @@ function funcAddTodo(allTodoUrl, searchText, newTodo, dispatch) {
         })
         // after the new todo is added to store get fullText todo to refresh UI
         .then(() => {
-            const fullTextUrl =
-                "http://13.233.99.122/todo/src/backend/utils/todo.php?action=GET_FULLTEXT_TODO";
+            const fullTextUrl = `${SERVER_URL}?action=GET_FULLTEXT_TODO`;
             funcGetFullTextTodo(fullTextUrl, searchText, dispatch);
         });
 }

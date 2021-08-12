@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getAllTodo } from "../../../../redux/todo/todoActions.js";
+import { SERVER_URL } from "./../../../../constants.js";
 
 // function to update a todo
 function funcUpdateTodo(url, id, column, newValue, dispatch) {
@@ -24,9 +25,7 @@ function funcUpdateTodo(url, id, column, newValue, dispatch) {
         })
         .then(() => {
             axios
-                .get(
-                    "http://13.233.99.122/todo/src/backend/utils/todo.php?action=GET_ALL_TODO"
-                )
+                .get(`${SERVER_URL}?action=GET_ALL_TODO`)
                 .then((response) => {
                     // disptach all todo to store
                     // this refreshes the UI
