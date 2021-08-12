@@ -17,9 +17,9 @@ function funcDeleteTodo(url, id, dispatch) {
                 // delete todo from store
                 dispatch(deleteTodo(id));
             } else {
-                console.log(
-                    `Error : ERROR CODE=${response.data.status.code} ERROR MESSAGE=${response.data.status.message}`
-                );
+                // console.log(
+                //     `Error : ERROR CODE=${response.data.status.code} ERROR MESSAGE=${response.data.status.message}`
+                // );
             }
         })
         .catch((error) => {

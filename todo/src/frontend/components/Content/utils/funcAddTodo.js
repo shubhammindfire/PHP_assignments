@@ -17,9 +17,9 @@ function funcAddTodo(allTodoUrl, searchText, newTodo, dispatch) {
                 // dispatch new todo to store
                 dispatch(addTodo(response.data.payload));
             } else {
-                console.log(
-                    `Error : ERROR CODE=${response.data.status.code} ERROR MESSAGE=${response.data.status.message}`
-                );
+                // console.log(
+                //     `Error : ERROR CODE=${response.data.status.code} ERROR MESSAGE=${response.data.status.message}`
+                // );
             }
         })
         .catch((error) => {
@@ -35,9 +35,9 @@ function funcAddTodo(allTodoUrl, searchText, newTodo, dispatch) {
                     if (response.data.status.code === "200") {
                         dispatch(getAllTodo(response.data.payload));
                     } else {
-                        console.log(
-                            `Error : ERROR CODE=${response.data.status.code} ERROR MESSAGE=${response.data.status.message}`
-                        );
+                        // console.log(
+                        //     `Error : ERROR CODE=${response.data.status.code} ERROR MESSAGE=${response.data.status.message}`
+                        // );
                     }
                 })
                 .catch((error) => console.error(`Error: ${error}`));
